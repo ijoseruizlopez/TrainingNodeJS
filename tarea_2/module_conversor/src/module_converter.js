@@ -15,30 +15,41 @@ const axios = Axios.create({
 })
 
 async function request (url) {
-
-  try{
+  try {
     const response = await axios.get(`/latest?&access_key=${accesKey}`)
     if (response.data.success) {
       return response.data
     }
-  }catch{
-    console.log("error");
+    throw response.data.error;
+  } catch (error) {
+    throw error;
   }
 }
 
-async function rates() {
-   var result = await request();
-   return result.rates;
-}
-
-async function conversor(amount, symbol_from='USD', symbol_to='ARS') {
+async function get_rates() {
   try {
     var result = await request();
+    return result.rates;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function convert_amount(amount, symbol_from='USD', symbol_to='ARS') {
+  try {
+    var result = await request();
+
+    if(!result.rates[symbol_from])
+      throw symbol_from + " nonexistent symbol";
+
+    if(!result.rates[symbol_from])
+      throw symbol_to + " nonexistent symbol";
+
     var convertion = (result.rates[symbol_to] * amount)/result.rates[symbol_from];
     return convertion;
   } catch (error) {
-    console.log("error");
+    throw error;
   }
 }
 
-exports.conversor = conversor;
+exports.converter = {get_rates, convert_amount} ;
