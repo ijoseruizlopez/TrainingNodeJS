@@ -1,6 +1,11 @@
 'use strict';
 const module_converter = require('./module_converter');
 
+function Init(){
+  call_rates();
+  call_convert();
+}
+Init();
 
 async function call_rates() {
   try {
@@ -10,7 +15,6 @@ async function call_rates() {
     console.table(error)
   }
 }
-call_rates();
 
 async function call_convert() {
   try {
@@ -20,5 +24,5 @@ async function call_convert() {
     console.table(error)
   }
 }
-call_convert();
+
 
