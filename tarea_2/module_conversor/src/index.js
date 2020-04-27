@@ -9,9 +9,7 @@ async function call_rates() {
   } catch (error) {
     console.table(error)
   }
-
 }
-
 call_rates();
 
 async function call_convert() {
@@ -22,6 +20,5 @@ async function call_convert() {
     console.table(error)
   }
 }
-
 call_convert();
 
